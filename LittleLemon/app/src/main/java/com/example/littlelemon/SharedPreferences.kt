@@ -2,13 +2,6 @@ package com.example.littlelemon
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.edit
-import androidx.lifecycle.MutableLiveData
-import androidx.compose.runtime.livedata.observeAsState
 
 class PreferencesManager(context: Context) {
     private val sharedPreferences: SharedPreferences =
@@ -18,6 +11,11 @@ class PreferencesManager(context: Context) {
         val editor = sharedPreferences.edit()
 
         editor.putString(key, value)
+        editor.apply()
+    }
+    fun deleteData(key: String){
+        val editor = sharedPreferences.edit()
+        editor.remove(key)
         editor.apply()
     }
 

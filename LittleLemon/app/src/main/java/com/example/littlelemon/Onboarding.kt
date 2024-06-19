@@ -1,5 +1,6 @@
 package com.example.littlelemon
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,7 +14,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -37,7 +37,6 @@ import androidx.navigation.NavHostController
 import com.example.littlelemon.ui.theme.karlaFont
 import com.example.littlelemon.ui.theme.primary1
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Onboarding(navController: NavHostController) {
     val context = LocalContext.current
@@ -56,7 +55,7 @@ fun Onboarding(navController: NavHostController) {
                 contentDescription = "Little Lemon logo",
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier
-                    .padding(30.dp)
+                    .padding(25.dp)
                     .width(185.dp)
                     .height(40.dp)
             )
@@ -121,8 +120,10 @@ fun Onboarding(navController: NavHostController) {
             },
             supportingText = {
                 if (errorMessage.isNotEmpty()) {
-                    Text(text = errorMessage,
-                        color = Color.Red,fontSize = 14.sp)
+                    Text(
+                        text = errorMessage,
+                        color = Color.Red, fontSize = 14.sp
+                    )
                 }
             },
             shape = RoundedCornerShape(8.dp),
@@ -131,18 +132,22 @@ fun Onboarding(navController: NavHostController) {
                 .padding(start = 20.dp, end = 20.dp, top = 40.dp)
         )
 
-        Spacer(modifier = Modifier.height(120.dp))
+        Spacer(modifier = Modifier.height(125.dp))
         Button(
             onClick = {
-                errorMessage = if (firstName.isBlank() || lastName.isBlank() || emailAddress.isBlank()) {
-                    "Registration unsuccessful. Please enter all data."
+                if (firstName.isBlank() || lastName.isBlank() || emailAddress.isBlank()) {
+                    Toast.makeText(
+                        context,
+                        "Registration unsuccessful. Please enter all data.",
+                        Toast.LENGTH_LONG
+                    ).show()
                 } else {
                     val savePref = PreferencesManager(context = context)
                     savePref.saveData(name, firstName)
                     savePref.saveData(surname, lastName)
                     savePref.saveData(email, emailAddress)
                     navController.navigate(Home.route)
-                    "Registration successful!"
+                    Toast.makeText(context, "Registration successful!", Toast.LENGTH_SHORT).show()
                 }
             },
             border = BorderStroke(1.dp, Color(0xFFEE9972)),
@@ -164,6 +169,7 @@ fun Onboarding(navController: NavHostController) {
         }
     }
 }
+
 
 
 
