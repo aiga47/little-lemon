@@ -60,7 +60,8 @@ fun MenuList(items: List<MenuItemRoom>, categoryCallback: (categoryClicked: Stri
             color = Color.LightGray,
             thickness = 1.dp
         )
-        LazyColumn {
+        LazyColumn(modifier = Modifier
+            .height(250.dp)) {
             items.forEach {
                 item { MenuItems(it) }
             }
