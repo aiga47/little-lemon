@@ -36,56 +36,52 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import com.example.littlelemon.ui.theme.karlaFont
 import com.example.littlelemon.ui.theme.markaziFont
 import com.example.littlelemon.ui.theme.primary1
 
 @Composable
-fun Home(navController: NavHostController) {
-    val databaseMenuItems by DatabaseManager().getDB(LocalContext.current).getAll()
-        .observeAsState(emptyList())
-
-    Column {
-        Box(
-            modifier = Modifier
-                .padding(20.dp)
-                .fillMaxWidth()
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.logo),
-                contentDescription = "Little Lemon logo",
-                contentScale = ContentScale.FillBounds,
+fun HeroSection() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = primary1)
+            .padding(12.dp)
+    ) {
+        Text(
+            text = "Little Lemon",
+            color = Color(0xFFF4CE14),
+            fontWeight = FontWeight.Bold,
+            fontSize = 64.sp,
+            fontFamily = markaziFont,
+        )
+        Row {
+            Column(
                 modifier = Modifier
-                    .width(185.dp)
-                    .height(40.dp)
-                    .align(Alignment.Center)
-            )
-            IconButton(
-                onClick = { navController.navigate(Profile.route) },
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
+                    .padding(end = 12.dp)
             ) {
-                Icon(
-                    Icons.Outlined.AccountCircle,
-                    contentDescription = "Profile Icon",
-                    tint = Color.Black,
+                Text(
+                    text = "Chicago",
+                    color = Color.White,
+                    fontSize = 40.sp,
+                    fontFamily = markaziFont
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = "We are a family-owned Mediterranean restaurant, focused on traditional recipes served with a modern twist",
+                    color = Color.White,
+                    fontFamily = karlaFont,
+                    fontSize = 18.sp,
                     modifier = Modifier
-                        .size(100.dp)
+                        .fillMaxWidth(.65f)
                 )
             }
-        }
-        Column()
-        {
-            HeroSection()
-            ItemFilter()
+            Image(
+                painter = painterResource(id = R.drawable.hero_image),
+                contentDescription = "Little Lemon hero",
+                modifier = Modifier
+                    .clip(shape = RoundedCornerShape(12.dp))
+            )
         }
     }
 }
-
-
-
-
-
-
-
